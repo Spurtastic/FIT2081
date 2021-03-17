@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CarsApp_Week2</string>
+    <string name="Maker">Maker</string>
+    <string name="Model">Model</string>
+    <string name="Seats">Seats</string>
+    <string name="Year">Year</string>
+    <string name="Color">Color</string>
+    <string name="Price">Price</string>
+    <string name="Add_car_button">Add your Vehicle</string>
+    <string name="imageView2">Vehicle pic</string>
+    <string name="address">Address</string>
+    <string name="button_reset">Reset</string>
+
+
+</resources>
