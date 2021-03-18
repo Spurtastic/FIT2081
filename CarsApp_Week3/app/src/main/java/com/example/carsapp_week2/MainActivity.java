@@ -25,25 +25,25 @@ public class MainActivity extends AppCompatActivity {
     private String address_string;
 
     // Shared preferences
-    SharedPreferences carData;
-    SharedPreferences makerData;
+    private SharedPreferences carData;
+    private SharedPreferences makerData;
 
     // Editors
-    SharedPreferences.Editor carEditor;
-    SharedPreferences.Editor makerEditor;
+    private SharedPreferences.Editor carEditor;
+    private SharedPreferences.Editor makerEditor;
 
     // EditText;
-    EditText model;
-    EditText maker;
-    EditText seats;
-    EditText color;
-    EditText year ;
-    EditText price;
-    EditText address;
+    private EditText model;
+    private EditText maker;
+    private EditText seats;
+    private EditText color;
+    private EditText year ;
+    private EditText price;
+    private EditText address;
 
     // Buttons
-    Button resetBtn;
-    Button loadBtn;
+    private Button resetBtn;
+    private Button loadBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,25 +172,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
 //        Log.i("carApp", "onRestoreInstanceState: ");
-//        carData = getSharedPreferences("carData",0);
-//        carEditor = carData.edit();
-//        model.setText("");
-//        model.setText("");
-//        maker.setText("");
-//        seats.setText("");
-//        color.setText("");
-//        year.setText("");
-//        price.setText("");
-//        address.setText("");
-//        carEditor.clear().apply();
-//
-//        // so that the maker data is also erased when the orientation is changed
-//        makerData = getSharedPreferences("makerData", 0 );
-//        makerEditor = makerData.edit();
-//        maker.setText("");
-//        makerEditor.clear().apply();
+        carData = getSharedPreferences("carData",0);
+        carEditor = carData.edit();
+        model.setText("");
+        model.setText("");
+        maker.setText("");
+        seats.setText("");
+        color.setText("");
+        year.setText("");
+        price.setText("");
+        address.setText("");
+        carEditor.clear().apply();
+
+        // so that the maker data is also erased when the orientation is changed
+        makerData = getSharedPreferences("makerData", 0 );
+        makerEditor = makerData.edit();
+        maker.setText("");
+        makerEditor.clear().apply();
 
     }
 
