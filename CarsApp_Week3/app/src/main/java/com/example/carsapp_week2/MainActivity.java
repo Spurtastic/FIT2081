@@ -26,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     // Shared preferences
     SharedPreferences carData;
+    SharedPreferences makerData;
 
     // Editors
     SharedPreferences.Editor carEditor;
+    SharedPreferences.Editor makerEditor;
 
     // EditText;
     EditText model;
@@ -38,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
     EditText year ;
     EditText price;
     EditText address;
+
+    // Buttons
     Button resetBtn;
+    Button loadBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
         year = (EditText) findViewById(R.id.Year);
         price = (EditText) findViewById(R.id.price);
         address = (EditText) findViewById(R.id.address_input);
+        loadBtn = (Button) findViewById(R.id.load_btn);
+        loadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makerData = getSharedPreferences("makerData", 0);
+                maker_string= makerData.getString("makers",maker_string);
+                maker.setText(maker_string);
+                System.out.println(maker_string);
+            }
+        });
         resetBtn = (Button) findViewById(R.id.button_reset);
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 year.setText("");
                 price.setText("");
                 address.setText("");
-                carEditor.clear().commit();
+                carEditor.clear().apply();
+                System.out.println("this ran");
 
             }
         });
@@ -79,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         inputTextString = carData.getString(keyName,"");
         inputText = findViewById(ID);
         inputText.setText(inputTextString);
-        System.out.println("startSave ran");
+//        System.out.println("startSave ran");
     }
     @Override
     protected void onStart() {
@@ -92,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
         startSave(year, "year");
         startSave(color,"color");
         startSave(address,"address");
+
+
+//        System.out.println(maker_string);
 
     }
 
@@ -116,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         carEditor = carData.edit();
         carEditor.putString(keyName,editTextString);
         carEditor.commit();
-        System.out.println("killSave ran");
+//        System.out.println("killSave ran");
     }
 
     @Override
@@ -124,12 +143,17 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         Log.i("carApp", "onStop: ");
         killSave(model, model_string,"model");
-        killSave(maker, maker_string, "maker");
         killSave(seats,seats_string,"seats");
+        killSave(maker, maker_string, "maker");
         killSave(color,color_string,"color");
         killSave(year,year_string,"year");
         killSave(price,price_string,"price");
         killSave(address,address_string,"address");
+
+
+
+
+
 
     }
 
@@ -148,8 +172,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.i("carApp", "onRestoreInstanceState: ");
+//        super.onRestoreInstanceState(savedInstanceState);
+//        Log.i("carApp", "onRestoreInstanceState: ");
+//        carData = getSharedPreferences("carData",0);
+//        carEditor = carData.edit();
+//        model.setText("");
+//        model.setText("");
+//        maker.setText("");
+//        seats.setText("");
+//        color.setText("");
+//        year.setText("");
+//        price.setText("");
+//        address.setText("");
+//        carEditor.clear().apply();
+//
+//        // so that the maker data is also erased when the orientation is changed
+//        makerData = getSharedPreferences("makerData", 0 );
+//        makerEditor = makerData.edit();
+//        maker.setText("");
+//        makerEditor.clear().apply();
 
     }
 
@@ -157,6 +198,12 @@ public class MainActivity extends AppCompatActivity {
     public void showToast(View view){
         maker = (EditText) findViewById(R.id.Maker);
         Toast.makeText(this,"You have added "+ "("+maker.getText()+")" , Toast.LENGTH_SHORT).show();
+        maker = findViewById(R.id.Maker);
+        maker_string = maker.getText().toString();
+        makerData = getSharedPreferences("makerData", 0);
+        makerEditor = makerData.edit();
+        makerEditor.putString("makers",maker_string);
+        makerEditor.commit();
     }
 
 
