@@ -149,12 +149,7 @@ public class MainActivity extends AppCompatActivity {
         killSave(year,year_string,"year");
         killSave(price,price_string,"price");
         killSave(address,address_string,"address");
-
-
-
-
-
-
+        
     }
 
     @Override
@@ -173,24 +168,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-//        Log.i("carApp", "onRestoreInstanceState: ");
-        carData = getSharedPreferences("carData",0);
-        carEditor = carData.edit();
-        model.setText("");
-        model.setText("");
-        maker.setText("");
-        seats.setText("");
-        color.setText("");
-        year.setText("");
-        price.setText("");
-        address.setText("");
-        carEditor.clear().apply();
-
-        // so that the maker data is also erased when the orientation is changed
-        makerData = getSharedPreferences("makerData", 0 );
-        makerEditor = makerData.edit();
-        maker.setText("");
-        makerEditor.clear().apply();
 
     }
 
