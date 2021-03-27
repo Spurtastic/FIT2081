@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final char MULTIPLICATION = '*';
     private static final char DIVISION = '/';
     private static final char NO_OPERATION = '?';
+    private static final char POWER = '^';
 
     private char CURRENT_ACTION;
     private DecimalFormat decimalFormat;
@@ -167,6 +168,17 @@ public class MainActivity extends AppCompatActivity {
             interScreen.setText(null);
         }
     }
+    public void buttonPowerClick(View v){
+        computeCalculation();
+        if (Double.isNaN(valueOne)) {
+            showToast("Invalid Key");
+        } else {
+            CURRENT_ACTION = POWER;
+            resultScreen.setText(decimalFormat.format(valueOne) +"^");
+            valueOne= this.valueOne*valueOne;
+            interScreen.setText(null);
+        }
+    }
 
     public void buttonEqualClick(View v) {
 
@@ -212,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
             resultScreen.setText("");
             valueOne = Double.NaN;
         }
+        valueOne = Double.NaN;
 
 
 
@@ -232,6 +245,8 @@ public class MainActivity extends AppCompatActivity {
                     valueOne = this.valueOne * valueTwo;
                 else if (CURRENT_ACTION == DIVISION)
                     valueOne = this.valueOne / valueTwo;
+//                else if (CURRENT_ACTION == POWER);
+//                    valueOne= this.valueOne*this.valueOne;
             }
         } else {
             try {

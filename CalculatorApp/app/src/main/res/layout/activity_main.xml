@@ -169,6 +169,13 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/button18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="buttonPowerClick"
+            android:text="@string/button_power" />
+
+        <Button
             android:id="@+id/button17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

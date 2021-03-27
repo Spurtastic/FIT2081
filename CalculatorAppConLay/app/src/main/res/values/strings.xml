@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calculator: Table Layout</string>
+    <string name="app_name">Calculator: AppConLay</string>
     <string name="buttonEqual">=</string>
     <string name="add_button">+</string>
     <string name="button_multiply">*</string>
