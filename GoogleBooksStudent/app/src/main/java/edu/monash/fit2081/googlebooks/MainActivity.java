@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleSearchBtn(View view) {
+        TextView url = findViewById(R.id.keywords_id);
+        String url_string = url.getText().toString();
+        makeRequest(url_string);
 
     }
 
@@ -74,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                                                           dataItems.add(googleBook);
                                                       } catch (Exception e) {
                                                       }
+                                                      adapter = new RecyclerAdapter(dataItems);
+                                                      recyclerView.setAdapter(adapter);
+
 
                                                   }
                                                   // Now: all the data items are in the array list, send it to the recycler adapter to create views.
