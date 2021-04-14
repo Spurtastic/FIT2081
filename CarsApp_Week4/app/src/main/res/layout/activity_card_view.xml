@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="160dp"
+    android:paddingVertical="10dp"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="#BEFF5722"
     app:cardCornerRadius="50dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:padding="40dp"
-        android:paddingBottom="40dp">
+        android:padding="15dp">
+
 
         <TextView
             android:id="@+id/maker_title_card"
