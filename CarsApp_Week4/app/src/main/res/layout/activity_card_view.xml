@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    app:cardBackgroundColor="#BEFF5722"
+    app:cardCornerRadius="50dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="40dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:id="@+id/maker_title_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Maker:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/maker_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/maker_title_card"
+            android:text="maker"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/model_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="32dp"
+            android:layout_toEndOf="@+id/model_title_card"
+            android:text="model"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/model_title_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="32dp"
+            android:text="Model:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/year_title_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="32dp"
+            android:text="    Year:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/year_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="32dp"
+            android:layout_toEndOf="@+id/year_title_card"
+            android:text="Year"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/Seats_title_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="32dp"
+            android:text="  Seats:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/seat_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="32dp"
+            android:layout_toEndOf="@+id/Seats_title_card"
+            android:text="Seats"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/color_title_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="32dp"
+            android:text="  Color:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/color_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="32dp"
+            android:layout_toEndOf="@+id/Seats_title_card"
+            android:text="color"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/price_title_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="75dp"
+            android:layout_marginBottom="32dp"
+            android:text="   Price:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/price_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="75dp"
+            android:layout_marginBottom="32dp"
+            android:layout_toEndOf="@+id/Seats_title_card"
+            android:text="color"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

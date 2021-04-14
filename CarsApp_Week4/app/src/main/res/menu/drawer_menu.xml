@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/list_all_items"
+        android:title="List all Items" />
+    <item
+        android:id="@+id/last_car"
+        android:title="Remove Last car" />
+    <item
+        android:id="@+id/add_car_button"
+        android:title="@string/Add_car_button" />
+    <item
+        android:id="@+id/remove_all_cars"
+        android:title="Remove all cars" />
+    <item
+        android:id="@+id/car_count"
+        android:title="Car count" />
+    <item
+        android:id="@+id/exit"
+        android:title="exit" />
+</menu>
