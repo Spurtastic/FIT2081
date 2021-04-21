@@ -23,16 +23,17 @@ public abstract class carDB extends RoomDatabase {
     // this is the area to manipulate the data base
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    static carDB getDatabase(final Context context){
-        if (INSTANCE == null){
-            synchronized (carDB.class){
-                if(INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),carDB.class, CAR_STORAGE_DATABASE_NAME).build();
+
+    static carDB getDatabase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (carDB.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), carDB.class, CAR_STORAGE_DATABASE_NAME).build();
                 }
             }
         }
         return INSTANCE;
     }
-
-
 }
+
+
