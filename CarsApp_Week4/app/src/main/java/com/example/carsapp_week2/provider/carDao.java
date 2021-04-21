@@ -1,4 +1,8 @@
 package com.example.carsapp_week2.provider;
 
-public class carDao {
+
+import androidx.room.Dao;
+
+@Dao
+public interface carDao {
 }
