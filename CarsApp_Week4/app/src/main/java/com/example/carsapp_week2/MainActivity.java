@@ -12,8 +12,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,30 +19,39 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.carsapp_week2.provider.Car;
+import com.example.carsapp_week2.provider.carViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
 public class MainActivity extends AppCompatActivity {
+    // integers
+    private int seats_int;
+    private int year_int;
+    private int price_int;
+
 
     // Strings
     private String model_string;
     private String maker_string;
-    private String seats_string;
     private String color_string;
+    private String address_string;
+    private String seats_string;
     private String year_string;
     private String price_string;
-    private String address_string;
 
     // Shared preferences
     private SharedPreferences carData;
@@ -70,21 +77,23 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private FloatingActionButton floatingActionButton2;
 
-    // ArrayList
-    ArrayList<String> carList = new ArrayList<String>();
-    ArrayAdapter carAdapter;
-//    ArrayList<String> priceList = new ArrayList<String>();
-//    ArrayList<String> modelList = new ArrayList<String>();
-//    ArrayList<String> seatList = new ArrayList<String>();
-//    ArrayList<String> yearList = new ArrayList<String>();
-//    ArrayList<String> colorList = new ArrayList<String>();
+    //provide variables
+    private carViewModel mCarViewModel;
 
 
+
+    // list recycler interaction for the database
+    List<Car> carList = new ArrayList<>();
+    MyRecyclerAdapter carAdapter;
+
+    // not really sure how to parse data from the db to listview
+    ArrayList<String> makerArray= new ArrayList<String>();
+    ArrayAdapter makerAdapter;
     //layout
     DrawerLayout drawer;
 
-    //Gson
-    Gson gson = new Gson();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,12 +104,27 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        // setting the carViewModel up for data retrieval
+        carAdapter = new MyRecyclerAdapter();
+        mCarViewModel = new ViewModelProvider(this).get(carViewModel.class);
+        System.out.println("i am being reset each time");
+        ArrayList<String> tempArray = new ArrayList<>();
+        mCarViewModel.getVmAllCars().observe(this, newData ->{
+            carAdapter.setCarData(newData);
+            carAdapter.notifyDataSetChanged();
+            // set up the list using the db
+            TextView temp = findViewById(R.id.textView2);
+            temp.setText(newData.size()+"");
 
-        // Setting listview adapter
+        });
+        // setting the carViewModel up for data retrieval
+
+
+
         ListView listView = findViewById(R.id.listView);
-        carAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, carList);
-        listView.setAdapter(carAdapter);
-        // Setting listview adapter
+        makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray );
+        listView.setAdapter(makerAdapter);
+
 
 
         // setting drawer that comes out when you tap the three lines
@@ -125,50 +149,26 @@ public class MainActivity extends AppCompatActivity {
         address = (EditText) findViewById(R.id.address_input);
         // all the id retrievals for each individual input point
 
-        // Floating action button click listener
+        // Floating action button click listener for adding values
         floatingActionButton=  findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                maker = findViewById(R.id.Maker);
                 maker_string = maker.getText().toString();
-                makerData = getSharedPreferences("makerData", 0);
-                makerEditor = makerData.edit();
-                makerEditor.putString("makers",maker_string);
-                makerEditor.apply();
-
-
-                //price data on the side
-                price = findViewById(R.id.price);
-                price_string = price.getText().toString();
-//                priceList.add(price_string);
-
-
-                //color data on the side
-                color = findViewById(R.id.color);
-                color_string = color.getText().toString();
-//                colorList.add(color_string);
-
-
-                //seat data on the side
-                seats = findViewById(R.id.Seats);
-                seats_string = seats.getText().toString();
-//                seatList.add(seats_string);
-
-
-                //year data on the side
-                year = findViewById(R.id.Year);
-                year_string = year.getText().toString();
-//                yearList.add(year_string);
-
-                //model data on the side
-                model = findViewById(R.id.Model);
                 model_string = model.getText().toString();
-//                modelList.add(model_string);
+                color_string = color.getText().toString();
+                year_int = Integer.parseInt(year.getText().toString());
+                seats_int = Integer.parseInt(seats.getText().toString());
+                price_int = Integer.parseInt(price.getText().toString());
+                Car addCar = new Car(maker_string,model_string, year_int,seats_int,color_string,price_int);
+                mCarViewModel.insert(addCar);
 
-                // maker added
-                carList.add(maker_string);
-                carAdapter.notifyDataSetChanged();
+                makerArray.add(maker_string);
+
+                makerAdapter.notifyDataSetChanged();
+
+//                makerArray.add(maker_string);
+//                makerAdapter.notifyDataSetChanged();
             }
         });
         // Floating action button click listener
@@ -209,7 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 carAdapter.notifyDataSetChanged();}
             }
             else if(id == R.id.remove_all_cars){
-                carAdapter.clear();
+                mCarViewModel.deleteAll();
+                makerAdapter.clear();
 
             }
             else if(id == R.id.car_count){
@@ -222,46 +223,11 @@ public class MainActivity extends AppCompatActivity {
             else if (id == R.id.list_all_items){
                 Intent listAllItems = new Intent(getApplicationContext(), cardView.class);
 
-                String carListGson = gson.toJson(carList);
-//                String modelListGson = gson.toJson(modelList);
-//                String yearListGson = gson.toJson(yearList);
-//                String seatListGson = gson.toJson(seatList);
-//                String colorListGson = gson.toJson(colorList);
-//                String priceListGson = gson.toJson(priceList);
-
-                carData =getSharedPreferences("cList",0);
-                carEditor=carData.edit();
-                carEditor.putString("CAR_LIST", carListGson);
-//                carEditor.putString("MODEL_LIST",modelListGson);
-//                carEditor.putString("YEAR_LIST",yearListGson);
-//                carEditor.putString("SEAT_LIST",seatListGson);
-//                carEditor.putString("COLOR_LIST",colorListGson);
-//                carEditor.putString("PRICE_LIST",priceListGson);
-                carEditor.apply();
                 startActivity(listAllItems);
 
             }
             else if (id == R.id.add_car_button){
-                // maker data for viewing
-//                maker = (EditText) findViewById(R.id.Maker);
-                maker = findViewById(R.id.Maker);
-                maker_string = maker.getText().toString();
-                makerData = getSharedPreferences("makerData", 0);
-                makerEditor = makerData.edit();
 
-                price = findViewById(R.id.price);
-                price_string = price.getText().toString();
-                makerEditor.putString("makers",maker_string);
-                makerEditor.apply();
-
-
-                //price data on the side
-                price = findViewById(R.id.price);
-                price_string = price.getText().toString();
-//                priceList.add(price_string);
-
-
-                carList.add(maker_string);
                 carAdapter.notifyDataSetChanged();
 
             }
@@ -387,13 +353,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("carApp", "onResume: ");
+//        Log.i("carApp", "onResume: ");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("carApp", "onPause: ");
+//        Log.i("carApp", "onPause: ");
 //        System.out.println(R.id.Model);
     }
     // here the method basically retrieves the integer id of the EditText parses it through to get a string to be placed into the bundle
@@ -418,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
         year = (EditText) findViewById(R.id.Year);
         price = (EditText) findViewById(R.id.price);
         address = (EditText) findViewById(R.id.address_input);
-        Log.i("carApp", "onStop: ");
+//        Log.i("carApp", "onStop: ");
         killSave(model, model_string,"model");
         killSave(seats,seats_string,"seats");
         killSave(maker, maker_string, "maker");
@@ -432,13 +398,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("carApp", "onDestroy: ");
+//        Log.i("carApp", "onDestroy: ");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.i("carApp", "onSaveInstanceState");
+//        Log.i("carApp", "onSaveInstanceState");
 
     }
 

@@ -8,30 +8,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.carsapp_week2.provider.Car;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
 
-    ArrayList<String> carList;
-    ArrayList<String> modelList;
-    ArrayList<String> yearList;
-    ArrayList<String> seatList;
-    ArrayList<String> colorList;
-    ArrayList<String> priceList;
+    List<Car> carData = new ArrayList<>();
 
 
 
-    public MyRecyclerAdapter(ArrayList<String> _data,ArrayList<String> _data2, ArrayList<String> _data3, ArrayList<String> _data4, ArrayList<String> _data5,ArrayList<String> _data6)
-    {
-        carList = _data;
-        modelList = _data2;
-        yearList = _data3;
-        seatList = _data4;
-        colorList = _data5;
-        priceList = _data6;
+    public MyRecyclerAdapter(){
+
+    }
+
+    public void setCarData(List<Car> data){
+        this.carData = data;
     }
 
     @NonNull
@@ -44,26 +39,29 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerAdapter.ViewHolder holder, int position) {
-        holder.makerText.setText(carList.get(position));
-        holder.modelText.setText(modelList.get(position));
-        holder.yearText.setText(yearList.get(position));
-        holder.seatText.setText(seatList.get(position));
-        holder.colorText.setText(colorList.get(position));
-        holder.priceText.setText(priceList.get(position));
+
+        holder.makerText.setText(carData.get(position).getMaker_name());
+        holder.modelText.setText(carData.get(position).getModel_name());
+        holder.yearText.setText(String.valueOf(carData.get(position).getYear()));
+        holder.seatText.setText(String.valueOf(carData.get(position).getSeat_no()));
+        holder.colorText.setText(carData.get(position).getColor());
+        holder.priceText.setText(String.valueOf(carData.get(position).getPrice()));
+
+
+
+
 
         final int fPosition = position+1;
-        String fname = carList.get(position);
-        String fmodel = modelList.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() { //set back to itemView for students
             @Override public void onClick(View v) {
-                Snackbar.make(v, "Car No: " + fPosition + " with the name "+ fname + " and the model "+fmodel+ " is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(v, "Car No: " + fPosition + "is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return carList.size();
+        return carData.size();
     }
 
 

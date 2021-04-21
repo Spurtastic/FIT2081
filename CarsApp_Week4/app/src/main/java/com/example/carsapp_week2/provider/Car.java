@@ -39,8 +39,7 @@ public class Car {
     private int price;
 
 
-    public Car(int car_id, String maker_name, String model_name, int Year, int seat_no, String color, int price){
-        this.car_id = car_id;
+    public Car( String maker_name, String model_name, int Year, int seat_no, String color, int price){
         this.maker_name = maker_name;
         this.model_name = model_name;
         this.Year = Year;

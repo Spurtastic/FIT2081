@@ -41,5 +41,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     compileOnly 'com.google.android.wearable:wearable:2.6.0'
 }
