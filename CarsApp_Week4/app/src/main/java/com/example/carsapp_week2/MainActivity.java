@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private String price_string;
     private String address_string;
 
-    // Shared preferences
+    // Shared preferences xxxxxxx testttterererererer
     private SharedPreferences carData;
     private SharedPreferences makerData;
     private SharedPreferences sp;
