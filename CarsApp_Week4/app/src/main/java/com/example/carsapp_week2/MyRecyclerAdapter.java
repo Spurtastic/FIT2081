@@ -51,10 +51,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.colorText.setText(colorList.get(position));
         holder.priceText.setText(priceList.get(position));
 
-        final int fPosition = position;
+        final int fPosition = position+1;
+        String fname = carList.get(position);
+        String fmodel = modelList.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() { //set back to itemView for students
             @Override public void onClick(View v) {
-                Snackbar.make(v, "Item at position " + fPosition + " was clicked!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(v, "Car No: " + fPosition + " with the name "+ fname + " and the model "+fmodel+ " is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
@@ -65,6 +67,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     }
 
 
+
+    // to bind the bind view holder components to the card view
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View itemView;
         public TextView makerText;

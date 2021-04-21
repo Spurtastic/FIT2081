@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private Button resetBtn;
     private Button loadBtn;
     private FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButton2;
 
     // ArrayList
     ArrayList<String> carList = new ArrayList<String>();
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 //model data on the side
                 model = findViewById(R.id.Model);
                 model_string = model.getText().toString();
-                modelList.add(price_string);
+                modelList.add(model_string);
 
                 // maker added
                 carList.add(maker_string);
@@ -171,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // Floating action button click listener
+
 
         /* Request permissions to access SMS */
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
@@ -269,7 +271,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

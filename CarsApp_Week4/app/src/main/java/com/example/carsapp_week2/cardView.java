@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
 
 public class cardView extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -37,7 +42,7 @@ public class cardView extends AppCompatActivity {
     ArrayList<String> seatList;
     ArrayList<String> colorList;
     ArrayList<String> priceList;
-
+    private FloatingActionButton floatingActionButton2;
 
     Gson gson;
     @Override
@@ -69,7 +74,15 @@ public class cardView extends AppCompatActivity {
         seatList =gson.fromJson(seatListGson,array);
         colorList =gson.fromJson(colorListGson,array);
         priceList =gson.fromJson(priceListGson,array);
-
+        floatingActionButton2 = findViewById(R.id.floatingActionButton2);
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAndRemoveTask();
+//                Intent back = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(back);
+            }
+        });
         adapter = new MyRecyclerAdapter(carList,modelList,yearList,seatList,colorList,priceList);
         recyclerView.setAdapter(adapter);
 
