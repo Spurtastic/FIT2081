@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {carEntity.class},version = 1)
+@Database(entities = {Car.class},version = 1)
 public abstract class carDB extends RoomDatabase {
 
     public static final String CAR_STORAGE_DATABASE_NAME = "car_dataBase";

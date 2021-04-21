@@ -7,7 +7,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Cars")
-public class carEntity {
+public class Car {
     // car number for unique keys
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -39,7 +39,7 @@ public class carEntity {
     private int price;
 
 
-    public  carEntity(int car_id, String maker_name, String model_name, int Year, int seat_no, String color, int price){
+    public Car(int car_id, String maker_name, String model_name, int Year, int seat_no, String color, int price){
         this.car_id = car_id;
         this.maker_name = maker_name;
         this.model_name = model_name;
