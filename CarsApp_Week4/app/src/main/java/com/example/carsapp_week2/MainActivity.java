@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
     // ArrayList
     ArrayList<String> carList = new ArrayList<String>();
     ArrayAdapter carAdapter;
-    ArrayList<String> priceList = new ArrayList<String>();
-    ArrayList<String> modelList = new ArrayList<String>();
-    ArrayList<String> seatList = new ArrayList<String>();
-    ArrayList<String> yearList = new ArrayList<String>();
-    ArrayList<String> colorList = new ArrayList<String>();
+//    ArrayList<String> priceList = new ArrayList<String>();
+//    ArrayList<String> modelList = new ArrayList<String>();
+//    ArrayList<String> seatList = new ArrayList<String>();
+//    ArrayList<String> yearList = new ArrayList<String>();
+//    ArrayList<String> colorList = new ArrayList<String>();
 
 
     //layout
@@ -141,30 +141,30 @@ public class MainActivity extends AppCompatActivity {
                 //price data on the side
                 price = findViewById(R.id.price);
                 price_string = price.getText().toString();
-                priceList.add(price_string);
+//                priceList.add(price_string);
 
 
                 //color data on the side
                 color = findViewById(R.id.color);
                 color_string = color.getText().toString();
-                colorList.add(color_string);
+//                colorList.add(color_string);
 
 
                 //seat data on the side
                 seats = findViewById(R.id.Seats);
                 seats_string = seats.getText().toString();
-                seatList.add(seats_string);
+//                seatList.add(seats_string);
 
 
                 //year data on the side
                 year = findViewById(R.id.Year);
                 year_string = year.getText().toString();
-                yearList.add(year_string);
+//                yearList.add(year_string);
 
                 //model data on the side
                 model = findViewById(R.id.Model);
                 model_string = model.getText().toString();
-                modelList.add(model_string);
+//                modelList.add(model_string);
 
                 // maker added
                 carList.add(maker_string);
@@ -223,20 +223,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent listAllItems = new Intent(getApplicationContext(), cardView.class);
 
                 String carListGson = gson.toJson(carList);
-                String modelListGson = gson.toJson(modelList);
-                String yearListGson = gson.toJson(yearList);
-                String seatListGson = gson.toJson(seatList);
-                String colorListGson = gson.toJson(colorList);
-                String priceListGson = gson.toJson(priceList);
+//                String modelListGson = gson.toJson(modelList);
+//                String yearListGson = gson.toJson(yearList);
+//                String seatListGson = gson.toJson(seatList);
+//                String colorListGson = gson.toJson(colorList);
+//                String priceListGson = gson.toJson(priceList);
 
                 carData =getSharedPreferences("cList",0);
                 carEditor=carData.edit();
                 carEditor.putString("CAR_LIST", carListGson);
-                carEditor.putString("MODEL_LIST",modelListGson);
-                carEditor.putString("YEAR_LIST",yearListGson);
-                carEditor.putString("SEAT_LIST",seatListGson);
-                carEditor.putString("COLOR_LIST",colorListGson);
-                carEditor.putString("PRICE_LIST",priceListGson);
+//                carEditor.putString("MODEL_LIST",modelListGson);
+//                carEditor.putString("YEAR_LIST",yearListGson);
+//                carEditor.putString("SEAT_LIST",seatListGson);
+//                carEditor.putString("COLOR_LIST",colorListGson);
+//                carEditor.putString("PRICE_LIST",priceListGson);
                 carEditor.apply();
                 startActivity(listAllItems);
 
@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 maker_string = maker.getText().toString();
                 makerData = getSharedPreferences("makerData", 0);
                 makerEditor = makerData.edit();
+
                 price = findViewById(R.id.price);
                 price_string = price.getText().toString();
                 makerEditor.putString("makers",maker_string);
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 //price data on the side
                 price = findViewById(R.id.price);
                 price_string = price.getText().toString();
-                priceList.add(price_string);
+//                priceList.add(price_string);
 
 
                 carList.add(maker_string);
