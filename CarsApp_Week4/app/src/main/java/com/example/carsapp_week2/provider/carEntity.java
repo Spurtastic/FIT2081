@@ -58,4 +58,28 @@ public class carEntity {
     public void setCar_id(@NonNull int car_id) {
         this.car_id = car_id;
     }
+
+    public String getMaker_name() {
+        return maker_name;
+    }
+
+    public String getModel_name() {
+        return model_name;
+    }
+
+    public int getYear() {
+        return Year;
+    }
+
+    public int getSeat_no() {
+        return seat_no;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 }
