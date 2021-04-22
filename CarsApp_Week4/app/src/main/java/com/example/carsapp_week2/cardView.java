@@ -45,6 +45,9 @@ public class cardView extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);  //A RecyclerView.LayoutManager implementation which provides similar functionality to ListView.
         recyclerView.setLayoutManager(layoutManager);   // Also StaggeredGridLayoutManager and GridLayoutManager or a custom Layout manager
 
+        adapter = new MyRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
+
         mCarViewModel = new ViewModelProvider(this).get(carViewModel.class);
         mCarViewModel.getVmAllCars().observe(this, newData ->{
             adapter.setCarData(newData);
@@ -58,8 +61,7 @@ public class cardView extends AppCompatActivity {
                 finishAndRemoveTask();
             }
         });
-        adapter = new MyRecyclerAdapter();
-        recyclerView.setAdapter(adapter);
+
 
     }
 }

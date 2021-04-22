@@ -73,7 +73,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public TextView modelText;
         public TextView yearText;
         public TextView seatText;
-
         public TextView colorText;
         public TextView priceText;
 
