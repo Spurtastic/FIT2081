@@ -134,6 +134,27 @@
             android:text="color"
             android:textSize="10sp" />
 
+        <TextView
+            android:id="@+id/car_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="90dp"
+            android:layout_marginBottom="32dp"
+            android:text="   Car ID:   "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/car_id_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="90dp"
+            android:layout_marginBottom="32dp"
+            android:layout_toEndOf="@+id/Seats_title_card"
+            android:text="car_id"
+            android:textSize="10sp" />
+
     </RelativeLayout>
 
 

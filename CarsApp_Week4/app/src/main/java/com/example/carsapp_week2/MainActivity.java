@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     //layout
     DrawerLayout drawer;
 
-
+    int size;
 
 
     @Override
@@ -107,14 +107,13 @@ public class MainActivity extends AppCompatActivity {
         // setting the carViewModel up for data retrieval
         carAdapter = new MyRecyclerAdapter();
         mCarViewModel = new ViewModelProvider(this).get(carViewModel.class);
-        System.out.println("i am being reset each time");
-        ArrayList<String> tempArray = new ArrayList<>();
         mCarViewModel.getVmAllCars().observe(this, newData ->{
             carAdapter.setCarData(newData);
             carAdapter.notifyDataSetChanged();
             // set up the list using the db
             TextView temp = findViewById(R.id.textView2);
             temp.setText(newData.size()+"");
+            size = newData.size();
 
         });
         // setting the carViewModel up for data retrieval
@@ -162,13 +161,8 @@ public class MainActivity extends AppCompatActivity {
                 price_int = Integer.parseInt(price.getText().toString());
                 Car addCar = new Car(maker_string,model_string, year_int,seats_int,color_string,price_int);
                 mCarViewModel.insert(addCar);
-
                 makerArray.add(maker_string);
-
                 makerAdapter.notifyDataSetChanged();
-
-//                makerArray.add(maker_string);
-//                makerAdapter.notifyDataSetChanged();
             }
         });
         // Floating action button click listener
@@ -201,20 +195,24 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             int id = item.getItemId();
             if(id == R.id.last_car){
-                if(carList.size()==0){
-                    "".isEmpty(); // do nothing
+                if((size == 0)&&(makerArray.size()==0) ){
+
                 }
                 else{
-                carList.remove(carList.size()-1);
-                carAdapter.notifyDataSetChanged();}
+                    mCarViewModel.deleteLast();
+                    carAdapter.notifyDataSetChanged();
+                    makerArray.remove(makerArray.size()-1);
+                    makerAdapter.notifyDataSetChanged();
+                }
             }
             else if(id == R.id.remove_all_cars){
                 mCarViewModel.deleteAll();
                 makerAdapter.clear();
 
+
             }
             else if(id == R.id.car_count){
-                Toast.makeText(getApplicationContext(),"car fleet: "+ carList.size() , Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"car fleet: "+ size , Toast.LENGTH_LONG).show();
             }
             else if (id == R.id.exit){
                 finishAndRemoveTask();
@@ -227,12 +225,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
             else if (id == R.id.add_car_button){
-
-                carAdapter.notifyDataSetChanged();
+                maker_string = maker.getText().toString();
+                model_string = model.getText().toString();
+                color_string = color.getText().toString();
+                year_int = Integer.parseInt(year.getText().toString());
+                seats_int = Integer.parseInt(seats.getText().toString());
+                price_int = Integer.parseInt(price.getText().toString());
+                Car addCar = new Car(maker_string,model_string, year_int,seats_int,color_string,price_int);
+                mCarViewModel.insert(addCar);
+                makerArray.add(maker_string);
+                makerAdapter.notifyDataSetChanged();
 
             }
-
-
             drawer.closeDrawer(GravityCompat.START);
 
             return true;

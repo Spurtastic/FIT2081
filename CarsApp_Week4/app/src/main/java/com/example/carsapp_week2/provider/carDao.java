@@ -39,5 +39,10 @@ public interface carDao {
     @Query("delete From Cars")
     void deleteAllCars();
 
+    @Query(("delete From cars where car_id = (select MAX(car_id) From cars);"))
+    void deleteLastCar();
+
+    @Query("Select count(car_id) from Cars")
+    LiveData<Integer> getSize();
 
 }

@@ -9,13 +9,16 @@ import java.util.List;
 public class carRepository {
     private carDao rcarDao;
     private LiveData<List<Car>> rallCars;
+    LiveData<Integer> size;
 
     carRepository(Application application){
         carDB database = carDB.getDatabase(application);
         rcarDao = database.CarDao();
         rallCars = rcarDao.getAllCars();
+        size = rcarDao.getSize();
     }
 
+    LiveData<Integer> getSize(){return size;}
     LiveData<List<Car>> getAllCars(){
         return rallCars;
     }
@@ -28,6 +31,11 @@ public class carRepository {
             rcarDao.deleteAllCars();
         });
     }
+    void deleteLast(){
+        carDB.databaseWriteExecutor.execute(()->{ rcarDao.deleteLastCar();});
+    }
+
+
 
 
 }

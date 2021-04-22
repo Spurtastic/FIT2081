@@ -46,6 +46,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.seatText.setText(String.valueOf(carData.get(position).getSeat_no()));
         holder.colorText.setText(carData.get(position).getColor());
         holder.priceText.setText(String.valueOf(carData.get(position).getPrice()));
+        holder.car_id.setText(String.valueOf(carData.get(position).getCar_id()));
 
 
 
@@ -75,6 +76,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         public TextView seatText;
         public TextView colorText;
         public TextView priceText;
+        public TextView car_id;
 
 
         public ViewHolder(View itemView) {
@@ -86,6 +88,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             seatText = itemView.findViewById(R.id.seat_card);
             colorText = itemView.findViewById(R.id.color_card);
             priceText = itemView.findViewById(R.id.price_card);
+            car_id = itemView.findViewById(R.id.car_id_card);
 
 
 
