@@ -35,5 +35,6 @@ public class carViewModel extends AndroidViewModel {
     public void deleteLast(){
         vmCarRepo.deleteLast();
     }
+    public void deleteModel(String Name) {vmCarRepo.deleteModel(Name);}
 
 }

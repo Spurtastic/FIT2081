@@ -45,4 +45,7 @@ public interface carDao {
     @Query("Select count(car_id) from Cars")
     LiveData<Integer> getSize();
 
+    @Query(("delete from cars where maker_name = :name"))
+    void deleteModel(String name);
+
 }

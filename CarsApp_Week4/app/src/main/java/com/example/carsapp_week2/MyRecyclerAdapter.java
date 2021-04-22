@@ -6,9 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carsapp_week2.provider.Car;
+import com.example.carsapp_week2.provider.carDB;
+import com.example.carsapp_week2.provider.carViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ import java.util.List;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
 
     List<Car> carData = new ArrayList<>();
+    carViewModel mcarViewModel;
+    MyRecyclerAdapter adapter;
 
 
 
@@ -28,6 +33,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public void setCarData(List<Car> data){
         this.carData = data;
     }
+
 
     @NonNull
     @Override
@@ -53,9 +59,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
 
         final int fPosition = position+1;
-        holder.itemView.setOnClickListener(new View.OnClickListener() { //set back to itemView for students
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Snackbar.make(v, "Car No: " + fPosition + "is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+//                Snackbar.make(v, "Car No: " +  + "is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
