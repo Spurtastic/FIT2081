@@ -27,7 +27,7 @@ public class cardView extends AppCompatActivity {
 
 
     // view model
-    private carViewModel mCarViewModel;
+    public static carViewModel mCarViewModel;
 
 
 

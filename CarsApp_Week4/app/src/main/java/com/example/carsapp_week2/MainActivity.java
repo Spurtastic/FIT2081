@@ -202,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     mCarViewModel.deleteLast();
                     carAdapter.notifyDataSetChanged();
+
+
+
                     makerArray.remove(makerArray.size()-1);
                     makerAdapter.notifyDataSetChanged();
                 }

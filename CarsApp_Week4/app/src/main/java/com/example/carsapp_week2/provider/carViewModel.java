@@ -11,7 +11,7 @@ import java.util.List;
 public class carViewModel extends AndroidViewModel {
 
 
-    private carRepository vmCarRepo;
+    static carRepository vmCarRepo;
     private LiveData<List<Car>> vmAllCars;
     LiveData<Integer> size;
 

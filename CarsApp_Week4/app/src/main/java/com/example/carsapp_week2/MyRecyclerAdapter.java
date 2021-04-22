@@ -21,7 +21,7 @@ import java.util.List;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
 
     List<Car> carData = new ArrayList<>();
-    carViewModel mcarViewModel;
+
     MyRecyclerAdapter adapter;
 
 
@@ -55,13 +55,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.car_id.setText(String.valueOf(carData.get(position).getCar_id()));
 
 
-
-
-
         final int fPosition = position+1;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-
+                cardView.mCarViewModel.deleteModel(carData.get(position).getModel_name());
 //                Snackbar.make(v, "Car No: " +  + "is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
