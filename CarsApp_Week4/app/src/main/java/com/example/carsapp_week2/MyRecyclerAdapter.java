@@ -6,9 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carsapp_week2.provider.Car;
+import com.example.carsapp_week2.provider.carDB;
+import com.example.carsapp_week2.provider.carViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
 
     List<Car> carData = new ArrayList<>();
 
+    MyRecyclerAdapter adapter;
+
 
 
     public MyRecyclerAdapter(){
@@ -28,6 +33,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public void setCarData(List<Car> data){
         this.carData = data;
     }
+
 
     @NonNull
     @Override
@@ -49,13 +55,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.car_id.setText(String.valueOf(carData.get(position).getCar_id()));
 
 
-
-
-
         final int fPosition = position+1;
-        holder.itemView.setOnClickListener(new View.OnClickListener() { //set back to itemView for students
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Snackbar.make(v, "Car No: " + fPosition + "is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                cardView.mCarViewModel.deleteModel(carData.get(position).getModel_name());
+//                Snackbar.make(v, "Car No: " +  + "is selected" , Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }

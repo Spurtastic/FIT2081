@@ -35,6 +35,10 @@ public class carRepository {
         carDB.databaseWriteExecutor.execute(()->{ rcarDao.deleteLastCar();});
     }
 
+    void deleteModel(String Name){
+        carDB.databaseWriteExecutor.execute(()->{rcarDao.deleteModel(Name);});
+    }
+
 
 
 

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // list recycler interaction for the database
-    List<Car> carList = new ArrayList<>();
+//    List<Car> carList = new ArrayList<>();
     MyRecyclerAdapter carAdapter;
 
     // not really sure how to parse data from the db to listview
@@ -185,8 +185,9 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener UndoListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            carList.remove(carList.size()-1);
-            carAdapter.notifyDataSetChanged();
+
+            makerArray.remove(size-1);
+            makerAdapter.notifyDataSetChanged();
         }
     };
     class myNavigationListener implements NavigationView.OnNavigationItemSelectedListener{
@@ -201,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     mCarViewModel.deleteLast();
                     carAdapter.notifyDataSetChanged();
+
+
+
                     makerArray.remove(makerArray.size()-1);
                     makerAdapter.notifyDataSetChanged();
                 }
