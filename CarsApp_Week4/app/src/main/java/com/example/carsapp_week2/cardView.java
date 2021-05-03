@@ -30,9 +30,6 @@ public class cardView extends AppCompatActivity {
     public static carViewModel mCarViewModel;
 
 
-
-
-
     private FloatingActionButton floatingActionButton2;
 
 

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String year_string;
     private String price_string;
 
-    // Shared preferences xxxxxxx testttterererererer
+    // Shared preferences
     private SharedPreferences carData;
     private SharedPreferences makerData;
     private SharedPreferences sp;
@@ -81,14 +81,13 @@ public class MainActivity extends AppCompatActivity {
     private carViewModel mCarViewModel;
 
 
-
-    // list recycler interaction for the database
-//    List<Car> carList = new ArrayList<>();
+    // recycler
     MyRecyclerAdapter carAdapter;
 
-    // not really sure how to parse data from the db to listview
+    // not really sure how to parse data from the db to listview these are arraylists i used
     ArrayList<String> makerArray= new ArrayList<String>();
     ArrayAdapter makerAdapter;
+
     //layout
     DrawerLayout drawer;
 
@@ -117,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
         // setting the carViewModel up for data retrieval
-
-
-
         ListView listView = findViewById(R.id.listView);
         makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray );
         listView.setAdapter(makerAdapter);
@@ -202,9 +198,6 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     mCarViewModel.deleteLast();
                     carAdapter.notifyDataSetChanged();
-
-
-
                     makerArray.remove(makerArray.size()-1);
                     makerAdapter.notifyDataSetChanged();
                 }
@@ -212,8 +205,6 @@ public class MainActivity extends AppCompatActivity {
             else if(id == R.id.remove_all_cars){
                 mCarViewModel.deleteAll();
                 makerAdapter.clear();
-
-
             }
             else if(id == R.id.car_count){
                 Toast.makeText(getApplicationContext(),"car fleet: "+ size , Toast.LENGTH_LONG).show();
@@ -256,7 +247,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
         if(id == R.id.clear_fields){
             model = (EditText) findViewById(R.id.Model);
             maker = (EditText) findViewById(R.id.Maker);
@@ -332,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
         inputTextString = carData.getString(keyName,"");
         inputText = findViewById(ID);
         inputText.setText(inputTextString);
-//        System.out.println("startSave ran");
     }
 
     @Override
@@ -353,22 +342,17 @@ public class MainActivity extends AppCompatActivity {
         startSave(color,"color");
         startSave(address,"address");
 
-
-//        System.out.println(maker_string);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        Log.i("carApp", "onResume: ");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 //        Log.i("carApp", "onPause: ");
-//        System.out.println(R.id.Model);
     }
     // here the method basically retrieves the integer id of the EditText parses it through to get a string to be placed into the bundle
     protected void killSave(EditText inputText, String editTextString, String keyName){
@@ -392,7 +376,6 @@ public class MainActivity extends AppCompatActivity {
         year = (EditText) findViewById(R.id.Year);
         price = (EditText) findViewById(R.id.price);
         address = (EditText) findViewById(R.id.address_input);
-//        Log.i("carApp", "onStop: ");
         killSave(model, model_string,"model");
         killSave(seats,seats_string,"seats");
         killSave(maker, maker_string, "maker");
@@ -406,13 +389,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        Log.i("carApp", "onDestroy: ");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-//        Log.i("carApp", "onSaveInstanceState");
 
     }
 
