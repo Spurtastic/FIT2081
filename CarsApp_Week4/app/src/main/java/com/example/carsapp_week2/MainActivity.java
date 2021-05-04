@@ -31,6 +31,8 @@ import com.example.carsapp_week2.provider.carViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,15 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     // list recycler interaction for the database
-//    List<Car> carList = new ArrayList<>();
     MyRecyclerAdapter carAdapter;
 
     // not really sure how to parse data from the db to listview
     ArrayList<String> makerArray= new ArrayList<String>();
     ArrayAdapter makerAdapter;
+
+
     //layout
     DrawerLayout drawer;
 
+
+    DatabaseReference myRef;
     int size;
 
 
@@ -103,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         // setting the carViewModel up for data retrieval
         carAdapter = new MyRecyclerAdapter();
         mCarViewModel = new ViewModelProvider(this).get(carViewModel.class);
@@ -114,16 +118,11 @@ public class MainActivity extends AppCompatActivity {
             TextView temp = findViewById(R.id.textView2);
             temp.setText(newData.size()+"");
             size = newData.size();
-
         });
         // setting the carViewModel up for data retrieval
-
-
-
         ListView listView = findViewById(R.id.listView);
-        makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray );
+        makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray);
         listView.setAdapter(makerAdapter);
-
 
 
         // setting drawer that comes out when you tap the three lines
@@ -136,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
         // setting drawer that comes out when you tap the three lines
 
 
+        // firebase setup
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Cars");
+        // firebase setup
 
 
 
@@ -161,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 price_int = Integer.parseInt(price.getText().toString());
                 Car addCar = new Car(maker_string,model_string, year_int,seats_int,color_string,price_int);
                 mCarViewModel.insert(addCar);
+                myRef.push().setValue(addCar);
                 makerArray.add(maker_string);
                 makerAdapter.notifyDataSetChanged();
             }
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         // Floating action button click listener
 
 
+        // SMS section to retrieve and store data
         /* Request permissions to access SMS */
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS}, 0);
         /* Create and instantiate the local broadcast receiver
@@ -180,12 +185,15 @@ public class MainActivity extends AppCompatActivity {
          * class SMSReceiver @line 11
          * */
         registerReceiver(myBroadCastReceiver, new IntentFilter(orderReceiver.SMS_FILTER));
+        //SMS section to retrieve and store data
+
+
+
 
     }
     View.OnClickListener UndoListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             makerArray.remove(size-1);
             makerAdapter.notifyDataSetChanged();
         }
@@ -202,9 +210,6 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     mCarViewModel.deleteLast();
                     carAdapter.notifyDataSetChanged();
-
-
-
                     makerArray.remove(makerArray.size()-1);
                     makerAdapter.notifyDataSetChanged();
                 }
@@ -212,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             else if(id == R.id.remove_all_cars){
                 mCarViewModel.deleteAll();
                 makerAdapter.clear();
-
+                myRef.removeValue();
 
             }
             else if(id == R.id.car_count){
@@ -220,7 +225,6 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (id == R.id.exit){
                 finishAndRemoveTask();
-
             }
             else if (id == R.id.list_all_items){
                 Intent listAllItems = new Intent(getApplicationContext(), cardView.class);

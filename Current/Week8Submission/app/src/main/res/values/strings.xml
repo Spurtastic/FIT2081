@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CarApp_Week2</string>
+    <string name="drawer_open">Drawer Opens</string>
+    <string name="drawer_close">Drawer Closes</string>
+</resources>
