@@ -83,22 +83,16 @@ public class MainActivity extends AppCompatActivity {
     private carViewModel mCarViewModel;
 
 
-<<<<<<< HEAD
-    // recycler
-=======
 
-    // list recycler interaction for the database
->>>>>>> development_testing
+    // recycler
+
     MyRecyclerAdapter carAdapter;
 
     // not really sure how to parse data from the db to listview these are arraylists i used
     ArrayList<String> makerArray= new ArrayList<String>();
     ArrayAdapter makerAdapter;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> development_testing
     //layout
     DrawerLayout drawer;
 
@@ -224,11 +218,10 @@ public class MainActivity extends AppCompatActivity {
             else if(id == R.id.remove_all_cars){
                 mCarViewModel.deleteAll();
                 makerAdapter.clear();
-<<<<<<< HEAD
-=======
+
                 myRef.removeValue();
 
->>>>>>> development_testing
+
             }
             else if(id == R.id.car_count){
                 Toast.makeText(getApplicationContext(),"car fleet: "+ size , Toast.LENGTH_LONG).show();
