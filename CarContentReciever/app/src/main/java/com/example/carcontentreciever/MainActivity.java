@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // calling the firebase here
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Cars");
-        //
+        // calling firebase here
 
         // Resets the car count that you have//
         btnRefreshCarCount = findViewById(R.id.btnRefreshCarCount);
