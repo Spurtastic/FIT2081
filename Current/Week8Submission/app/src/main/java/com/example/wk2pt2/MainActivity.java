@@ -139,7 +139,10 @@ public class MainActivity extends AppCompatActivity {
         int seatInt = Integer.parseInt(seats.getText().toString());
         double priceDoub = Double.parseDouble(price.getText().toString());
         //Create a new view model and.insert(car);
+<<<<<<< HEAD
 
+=======
+>>>>>>> development_testing
         counter++;
         Car car = new Car(makerTxt,modelTxt,yearInt,colorTxt,seatInt,priceDoub);
         mCarViewModel.insert(car);

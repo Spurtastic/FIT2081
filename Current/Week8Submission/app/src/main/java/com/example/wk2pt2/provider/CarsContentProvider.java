@@ -78,7 +78,10 @@ public class CarsContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
 
         long rowId = db.getOpenHelper().getWritableDatabase().insert(Car.TABLE_NAME, 0 , values);
+<<<<<<< HEAD
 
+=======
+>>>>>>> development_testing
         return ContentUris.withAppendedId(CONTENT_URI, rowId);
     }
 
