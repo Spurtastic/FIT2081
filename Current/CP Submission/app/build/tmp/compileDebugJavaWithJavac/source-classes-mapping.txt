@@ -1,6 +1,0 @@
-com/example/week8_contentreceiver/MainActivity.java
- com.example.week8_contentreceiver.MainActivity
- com.example.week8_contentreceiver.MainActivity$1
- com.example.week8_contentreceiver.MainActivity$2
-com/example/week8_contentreceiver/BuildConfig.java
- com.example.week8_contentreceiver.BuildConfig

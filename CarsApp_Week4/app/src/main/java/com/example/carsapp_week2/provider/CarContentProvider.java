@@ -9,6 +9,7 @@ import android.net.Uri;
 
 public class CarContentProvider extends ContentProvider {
     carDB db;
+    carDao cd;
     private final String carTable = "Cars";
     public static final String CONTENT_AUTHORITY = "carApp.contpro";
     public static final Uri CONTENT_URI = Uri.parse("content://"+CONTENT_AUTHORITY);
@@ -48,6 +49,7 @@ public class CarContentProvider extends ContentProvider {
     public boolean onCreate() {
         // carDb instantiated
         db = carDB.getDatabase(getContext());
+        cd = db.CarDao();
         return true;
     }
 
@@ -65,6 +67,7 @@ public class CarContentProvider extends ContentProvider {
                 .query(query, selectionArgs);
         return cursor;
     }
+    // MUA has the dao method, so you can create the access here so that it can be called else where
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
