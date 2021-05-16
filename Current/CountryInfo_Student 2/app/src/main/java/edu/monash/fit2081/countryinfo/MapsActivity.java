@@ -7,7 +7,10 @@ import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 //import android.support.v4.app.FragmentActivity;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -81,6 +84,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 else {
                     android.location.Address address = addresses.get(0);
                     selectedCountry = address.getCountryName();
+                    Toast t = Toast.makeText(getApplicationContext(), "PostCode: "+ address.getPostalCode(), Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.TOP, 0, 0);
+
+                    t.show();
                     msg = "Do you want more details about " + address.getCountryName() + "?";
                     actionFlag = true;
                 }

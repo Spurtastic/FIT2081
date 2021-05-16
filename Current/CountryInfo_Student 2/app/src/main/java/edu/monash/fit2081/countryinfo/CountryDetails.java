@@ -33,6 +33,7 @@ public class CountryDetails extends AppCompatActivity {
     private TextView area;
     private TextView currency;
     private TextView language;
+    private TextView region;
 
     // String items
     private String languages;
@@ -62,6 +63,7 @@ public class CountryDetails extends AppCompatActivity {
         currency = findViewById(R.id.currency_id);
         language = findViewById(R.id.languages);
         flag = findViewById(R.id.flagView);
+        region = findViewById(R.id.region);
         btnWiki = findViewById(R.id.wiki_button);
         btnWiki.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +177,9 @@ public class CountryDetails extends AppCompatActivity {
                             else if (keyName.equals("alpha2Code")){
                                 countryInfo.setAlpha2Code(jsonReader.nextString());
                             }
+                            else if (keyName.equals("region")){
+                                countryInfo.setRegion(jsonReader.nextString());
+                            }
                             else {
                                 jsonReader.skipValue();
                             }
@@ -203,10 +208,11 @@ public class CountryDetails extends AppCompatActivity {
             area.setText(Double.toString(countryInfo.getArea()));
             currency.setText(countryInfo.getCurrency());
             language.setText(countryInfo.getLanguages());
+            region.setText(countryInfo.getRegion());
             btnWiki.setText("Wiki "+countryInfo.getName());
             wikiUrl = "https://en.wikipedia.org/wiki/"+countryInfo.getName();
 
-            new GetFlag().execute("https://www.countryflags.io/"+countryInfo.getAlpha2Code()+"/flat/64.png");
+            new GetFlag().execute("https://flagcdn.com/144x108/"+countryInfo.getAlpha2Code().toLowerCase()+".png");
 
 
 
@@ -255,6 +261,7 @@ public class CountryDetails extends AppCompatActivity {
 
     private class CountryInfo {
         private String name;
+        private String region;
         private String alpha3Code;
         private String alpha2Code;
         private String capital;
@@ -263,6 +270,13 @@ public class CountryDetails extends AppCompatActivity {
         private String currency;
         private String languages;
 
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
 
         public String getAlpha2Code() {
             return alpha2Code;

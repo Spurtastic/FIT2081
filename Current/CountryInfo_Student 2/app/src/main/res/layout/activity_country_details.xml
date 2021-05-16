@@ -162,7 +162,7 @@
         android:id="@+id/wiki_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Loading..."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
@@ -194,6 +194,28 @@
         app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toEndOf="@+id/languages_title" />
 
+    <TextView
+        android:id="@+id/region"
+        android:layout_width="210dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="36dp"
+        android:text="Loading..."
+        android:textColor="#070000"
+        app:layout_constraintBaseline_toBaselineOf="@+id/region_title"
+        app:layout_constraintStart_toEndOf="@+id/region_title" />
+
+    <TextView
+        android:id="@+id/region_title"
+        android:layout_width="148dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Region"
+        android:textColor="#000000"
+        android:textColorHint="#100C0C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/languages_title" />
+
     <ImageView
         android:id="@+id/flagView"
         android:layout_width="254dp"
@@ -201,11 +223,11 @@
         android:layout_marginTop="76dp"
         android:layout_marginEnd="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/wiki_button"
-        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/languages_title"
-        app:layout_constraintVertical_bias="0.26"
+        app:layout_constraintVertical_bias="0.144"
         tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
