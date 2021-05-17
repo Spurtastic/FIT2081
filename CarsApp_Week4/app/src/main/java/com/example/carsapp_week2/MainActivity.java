@@ -3,6 +3,7 @@ package com.example.carsapp_week2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -11,9 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private int seats_int;
     private int year_int;
     private int price_int;
+    private int action_int;
+    private int x_int;
+    private int y_int;
 
 
     // Strings
@@ -82,10 +88,7 @@ public class MainActivity extends AppCompatActivity {
     //provide variables
     private carViewModel mCarViewModel;
 
-
-
     // recycler
-
     MyRecyclerAdapter carAdapter;
 
     // not really sure how to parse data from the db to listview these are arraylists i used
@@ -97,9 +100,16 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
 
 
+    //Database Reference
     DatabaseReference myRef;
     int size;
 
+
+    // View object
+    View frameForTouch;
+
+    // Text Views
+    TextView showTouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
             size = newData.size();
         });
         // setting the carViewModel up for data retrieval
-        ListView listView = findViewById(R.id.listView);
-        makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray);
-        listView.setAdapter(makerAdapter);
+//        ListView listView = findViewById(R.id.listView);
+//        makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray);
+//        listView.setAdapter(makerAdapter);
 
 
         // setting drawer that comes out when you tap the three lines
@@ -167,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 mCarViewModel.insert(addCar);
                 myRef.push().setValue(addCar);
                 makerArray.add(maker_string);
-                makerAdapter.notifyDataSetChanged();
+//                makerAdapter.notifyDataSetChanged();
             }
         });
         // Floating action button click listener
@@ -187,6 +197,67 @@ public class MainActivity extends AppCompatActivity {
          * */
         registerReceiver(myBroadCastReceiver, new IntentFilter(orderReceiver.SMS_FILTER));
         //SMS section to retrieve and store data
+
+        // touch interactions
+        frameForTouch = findViewById(R.id.constraint_id);
+        frameForTouch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getActionMasked();
+
+                switch (action) {
+                    case (MotionEvent.ACTION_DOWN):
+                        x_int = (int) event.getX();
+                        y_int = (int) event.getY();
+                        System.out.println(event.getX());
+                        System.out.println(event.getY());
+                        price = findViewById(R.id.price);
+                        if (event.getX() <= 200 && event.getY() <= 200) {
+                            if (!price.getText().toString().equals("")) {
+                                if (Integer.parseInt(price.getText().toString()) - 50 < 0) {
+                                    price.setText("0");
+                                } else {
+                                    price.setText(Integer.toString(Integer.parseInt(price.getText().toString()) - 50));
+                                }
+                            }
+                        } else if (event.getX() >= 900 && event.getY() <= 200) {
+                            if (!price.getText().toString().equals("")) {
+                                if (Integer.parseInt(price.getText().toString()) - 50 < 0) {
+                                    price.setText("0");
+                                } else {
+                                    price.setText(Integer.toString(Integer.parseInt(price.getText().toString()) + 50));
+                                }
+                            }
+                        }
+                        return true;
+
+                    case (MotionEvent.ACTION_MOVE):
+
+                        return true;
+
+
+                    case(MotionEvent.ACTION_UP):
+                        if (Math.abs(y_int-event.getY())<40) {
+                            // left - right
+                            if (x_int - event.getX() < 0) {
+                                addVehicle();
+                            }
+                        }
+                        else if(Math.abs(x_int-event.getX())<40){
+                            // up down gestures
+                            if (y_int - event.getY() < 0) {
+                                clearFields();
+                            }
+                        }
+
+                        return true;
+
+                    default:
+                        return false;
+
+                }
+            }
+        });
 
 
 
@@ -212,12 +283,12 @@ public class MainActivity extends AppCompatActivity {
                     mCarViewModel.deleteLast();
                     carAdapter.notifyDataSetChanged();
                     makerArray.remove(makerArray.size()-1);
-                    makerAdapter.notifyDataSetChanged();
+//                    makerAdapter.notifyDataSetChanged();
                 }
             }
             else if(id == R.id.remove_all_cars){
                 mCarViewModel.deleteAll();
-                makerAdapter.clear();
+//                makerAdapter.clear();
 
                 myRef.removeValue();
 
@@ -264,24 +335,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.clear_fields){
-            model = (EditText) findViewById(R.id.Model);
-            maker = (EditText) findViewById(R.id.Maker);
-            seats = (EditText) findViewById(R.id.Seats);
-            color = (EditText) findViewById(R.id.color);
-            year = (EditText) findViewById(R.id.Year);
-            price = (EditText) findViewById(R.id.price);
-            address = (EditText) findViewById(R.id.address_input);
-            carData = getSharedPreferences("carData",0);
-            carEditor = carData.edit();
-            model.setText("");
-            model.setText("");
-            maker.setText("");
-            seats.setText("");
-            color.setText("");
-            year.setText("");
-            price.setText("");
-            address.setText("");
-            carEditor.clear().apply();
+            clearFields();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -429,6 +483,39 @@ public class MainActivity extends AppCompatActivity {
         makerEditor = makerData.edit();
         makerEditor.putString("makers",maker_string);
         makerEditor.commit();
+    }
+    public void addVehicle(){
+        maker_string = maker.getText().toString();
+        model_string = model.getText().toString();
+        color_string = color.getText().toString();
+        year_int = Integer.parseInt(year.getText().toString());
+//        System.out.println(year_int);
+        seats_int = Integer.parseInt(seats.getText().toString());
+        price_int = Integer.parseInt(price.getText().toString());
+        Car addCar = new Car(maker_string,model_string, year_int,seats_int,color_string,price_int);
+        mCarViewModel.insert(addCar);
+        makerArray.add(maker_string);
+//        makerAdapter.notifyDataSetChanged();
+    }
+    public void clearFields(){
+        model = (EditText) findViewById(R.id.Model);
+        maker = (EditText) findViewById(R.id.Maker);
+        seats = (EditText) findViewById(R.id.Seats);
+        color = (EditText) findViewById(R.id.color);
+        year = (EditText) findViewById(R.id.Year);
+        price = (EditText) findViewById(R.id.price);
+        address = (EditText) findViewById(R.id.address_input);
+        carData = getSharedPreferences("carData",0);
+        carEditor = carData.edit();
+        model.setText("");
+        model.setText("");
+        maker.setText("");
+        seats.setText("");
+        color.setText("");
+        year.setText("");
+        price.setText("");
+        address.setText("");
+        carEditor.clear().apply();
     }
 
 
