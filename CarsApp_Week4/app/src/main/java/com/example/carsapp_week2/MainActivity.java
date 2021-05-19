@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private int action_int;
     private int x_int;
     private int y_int;
+    int size;
 
 
     // Strings
@@ -89,27 +91,31 @@ public class MainActivity extends AppCompatActivity {
     private carViewModel mCarViewModel;
 
     // recycler
-    MyRecyclerAdapter carAdapter;
+    private MyRecyclerAdapter carAdapter;
 
     // not really sure how to parse data from the db to listview these are arraylists i used
-    ArrayList<String> makerArray= new ArrayList<String>();
-    ArrayAdapter makerAdapter;
+    private ArrayList<String> makerArray= new ArrayList<String>();
+    private ArrayAdapter makerAdapter;
 
 
     //layout
-    DrawerLayout drawer;
+    private DrawerLayout drawer;
 
 
     //Database Reference
-    DatabaseReference myRef;
-    int size;
+    private DatabaseReference myRef;
+
 
 
     // View object
-    View frameForTouch;
+    private View frameForTouch;
+    private View frameForTouch2;
 
     // Text Views
-    TextView showTouch;
+    private TextView showTouch;
+
+    //Gesture detector
+    GestureDetector gestureTouchEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,9 +137,7 @@ public class MainActivity extends AppCompatActivity {
             size = newData.size();
         });
         // setting the carViewModel up for data retrieval
-//        ListView listView = findViewById(R.id.listView);
-//        makerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, makerArray);
-//        listView.setAdapter(makerAdapter);
+
 
 
         // setting drawer that comes out when you tap the three lines
@@ -160,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         year = (EditText) findViewById(R.id.Year);
         price = (EditText) findViewById(R.id.price);
         address = (EditText) findViewById(R.id.address_input);
+
         // all the id retrievals for each individual input point
 
         // Floating action button click listener for adding values
@@ -200,62 +205,16 @@ public class MainActivity extends AppCompatActivity {
 
         // touch interactions
         frameForTouch = findViewById(R.id.constraint_id);
+        gestureTouchEvents = new GestureDetector(this, new gestureDetectorCar());
+
+
+
         frameForTouch.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getActionMasked();
-
-                switch (action) {
-                    case (MotionEvent.ACTION_DOWN):
-                        x_int = (int) event.getX();
-                        y_int = (int) event.getY();
-                        System.out.println(event.getX());
-                        System.out.println(event.getY());
-                        price = findViewById(R.id.price);
-                        if (event.getX() <= 200 && event.getY() <= 200) {
-                            if (!price.getText().toString().equals("")) {
-                                if (Integer.parseInt(price.getText().toString()) - 50 < 0) {
-                                    price.setText("0");
-                                } else {
-                                    price.setText(Integer.toString(Integer.parseInt(price.getText().toString()) - 50));
-                                }
-                            }
-                        } else if (event.getX() >= 900 && event.getY() <= 200) {
-                            if (!price.getText().toString().equals("")) {
-                                if (Integer.parseInt(price.getText().toString()) - 50 < 0) {
-                                    price.setText("0");
-                                } else {
-                                    price.setText(Integer.toString(Integer.parseInt(price.getText().toString()) + 50));
-                                }
-                            }
-                        }
-                        return true;
-
-                    case (MotionEvent.ACTION_MOVE):
-
-                        return true;
-
-
-                    case(MotionEvent.ACTION_UP):
-                        if (Math.abs(y_int-event.getY())<40) {
-                            // left - right
-                            if (x_int - event.getX() < 0) {
-                                addVehicle();
-                            }
-                        }
-                        else if(Math.abs(x_int-event.getX())<40){
-                            // up down gestures
-                            if (y_int - event.getY() < 0) {
-                                clearFields();
-                            }
-                        }
-
-                        return true;
-
-                    default:
-                        return false;
-
-                }
+                gestureTouchEvents.onTouchEvent(event);
+                return true;
             }
         });
 
@@ -288,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(id == R.id.remove_all_cars){
                 mCarViewModel.deleteAll();
-//                makerAdapter.clear();
+                makerAdapter.clear();
 
                 myRef.removeValue();
 
@@ -324,6 +283,70 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
+    class gestureDetectorCar extends GestureDetector.SimpleOnGestureListener{
+
+        private EditText model;
+        private EditText maker;
+        private EditText seats;
+        private EditText color;
+        private EditText year ;
+        private EditText price;
+        private EditText address;
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            model = findViewById(R.id.Model);
+            model.setText("T-9000");
+
+            maker = findViewById(R.id.Maker);
+            maker.setText("SkyNet");
+
+            seats = findViewById(R.id.Seats);
+            seats.setText("1");
+
+            price = findViewById(R.id.price);
+            price.setText("20000.0");
+
+            color = findViewById(R.id.color);
+            color.setText("Silver");
+
+            year = findViewById(R.id.Year);
+            year.setText("1");
+
+            address = findViewById(R.id.address_input);
+            address.setText("Belmont road, 42nd avenue");
+
+            return super.onDoubleTap(e);
+        }
+
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            seats = findViewById(R.id.Seats);
+            if (!seats.getText().toString().equals("")){
+                if(Integer.parseInt(seats.getText().toString())>9){
+                    Toast.makeText(getApplicationContext(), "Max number of seats", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    seats.setText(Integer.toString(Integer.parseInt(seats.getText().toString())+1));
+                }
+            }
+            return super.onSingleTapConfirmed(e);
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            price = findViewById(R.id.price);
+            price.setText(Float.toString(Float.parseFloat(price.getText().toString())- distanceX));
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            clearFields();
+            super.onLongPress(e);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -422,7 +445,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        Log.i("carApp", "onPause: ");
     }
     // here the method basically retrieves the integer id of the EditText parses it through to get a string to be placed into the bundle
     protected void killSave(EditText inputText, String editTextString, String keyName){
@@ -433,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
         carEditor = carData.edit();
         carEditor.putString(keyName,editTextString);
         carEditor.commit();
-//        System.out.println("killSave ran");
+
     }
 
     @Override
@@ -463,6 +485,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+
         super.onSaveInstanceState(outState);
 
     }
@@ -489,13 +512,11 @@ public class MainActivity extends AppCompatActivity {
         model_string = model.getText().toString();
         color_string = color.getText().toString();
         year_int = Integer.parseInt(year.getText().toString());
-//        System.out.println(year_int);
         seats_int = Integer.parseInt(seats.getText().toString());
         price_int = Integer.parseInt(price.getText().toString());
         Car addCar = new Car(maker_string,model_string, year_int,seats_int,color_string,price_int);
         mCarViewModel.insert(addCar);
         makerArray.add(maker_string);
-//        makerAdapter.notifyDataSetChanged();
     }
     public void clearFields(){
         model = (EditText) findViewById(R.id.Model);
@@ -515,6 +536,9 @@ public class MainActivity extends AppCompatActivity {
         year.setText("");
         price.setText("");
         address.setText("");
+        year.setText("0.0");
+        seats.setText("0.0");
+        price.setText("0.0");
         carEditor.clear().apply();
     }
 
